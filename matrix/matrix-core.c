@@ -97,7 +97,7 @@ Matrix *matrix_load(char *file_string)
     fgets(entry, MAXCHAR, file);
     int rows = atoi(entry); // string char to int
     fgets(entry, MAXCHAR, file);
-    int rows = atoi(entry); // string char to int
+    int cols = atoi(entry); // string char to int
     Matrix *m = matrix_create(rows, cols);
 
     for (int i = 0; i < m->rows; i++)
@@ -126,7 +126,7 @@ void matrix_randomize(Matrix *m, int n)
 {
     double min = -1.0 / sqrt(n);
     double max = 1.0 / sqrt(n);
-    for (int i = 0; j < m->rows; i++)
+    for (int i = 0; i < m->rows; i++)
     {
         for (int j = 0; j < m->cols; j++)
         {
@@ -152,7 +152,7 @@ int matrix_argmax(Matrix *m)
 }
 
 // returns a single row or column vector
-Matrix *matrix_flatten(Matrix *m; int axis)
+Matrix *matrix_flatten(Matrix *m, int axis)
 {
     // Axis = 0 -> Column Vector, Axis = 1 -> Row Vector
     Matrix *mat;
