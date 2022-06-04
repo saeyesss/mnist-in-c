@@ -10,6 +10,25 @@
 
 #define MAXCHAR 1000
 
+NeuralNetwork *network_create(int input, int hidden, int output, double lr)
+{
+    NeuralNetwork *net = malloc(sizeof(NeuralNetwork));
+    net->input = input;
+    net->hidden = hidden;
+    net->output = output;
+    net->learning_rate = lr;
+
+    Matrix *hidden_layer = matrix_create(hidden, input);
+    Matrix *output_layer = matrix_create(output, hidden);
+
+    matrix_randomize(hidden_layer, hidden);
+    matrix_randomize(output_layer, output);
+
+    net->hidden_weights = hidden_layer;
+    net->output_weights = output_layer;
+    return net;
+}
+
 Matrix *network_predict_img(NeuralNetwork *net, Img *img)
 {
     Matrix *img_data = matrix_flatten(img->img_data, 0);
