@@ -1,0 +1,7 @@
+{
+  "files.associations": {
+    "math-fn.h": "c",
+    "neural-network.h": "c",
+    "matrix-core.h": "c"
+  }
+}
