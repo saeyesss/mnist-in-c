@@ -10,6 +10,39 @@
 
 #define MAXCHAR 1000
 
+Matrix *network_predict_img(NeuralNetwork *net, Img *img)
+{
+    Matrix *img_data = matrix_flatten(img->img_data, 0);
+    Matrix *res = network_predict(net, img_data);
+    matrix_free(img_data);
+    return res;
+}
+
+double network_predict_imgs(NeuralNetwork *net, Img **imgs, int n)
+{
+    int n_correct = 0;
+    for (int i = 0; i < n; i++)
+    {
+        Matrix *prediction = network_predict_img(net, imgs[i]);
+        if (matrix_argmax(prediction) == imgs[i]->label)
+        {
+            n_correct++;
+        }
+        matrix_free(prediction);
+    }
+    return 1.0 * n_correct / n;
+}
+
+Matrix *network_predict(NeuralNetwork *net, Matrix *input_data)
+{
+    Matrix *hidden_inputs = dot(net->hidden_weights, input_data);
+    Matrix *hidden_outputs = apply(sigmoid, hidden_inputs);
+    Matrix *final_inputs = dot(net->hidden_weights, hidden_outputs);
+    Matrix *final_outputs = apply(sigmoid, final_inputs);
+    Matrix *result = softMax(final_outputs);
+    return result;
+}
+
 void network_save(NeuralNetwork *net, char *file_string)
 {
     mkdir(file_string);
