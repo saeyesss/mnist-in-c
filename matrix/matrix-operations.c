@@ -106,14 +106,14 @@ Matrix *dot(Matrix *m1, Matrix *m2)
 }
 
 // returns a new matrix with some function pointer applied to every element in the matrix
-Matrix *apply(Matrix *m, (*func)(double))
+Matrix *apply(Matrix *m, double (*func)(double))
 {
     Matrix *mat = matrix_copy(m);
-    for (int i = 0; i < m1->rows; i++)
+    for (int i = 0; i < m->rows; i++)
     {
-        for (int j = 0; j < m2->cols; j++)
+        for (int j = 0; j < m->cols; j++)
         {
-            mat->entries[i][j] = (*func)m->entries[i][j];
+            mat->entries[i][j] = (*func)(m->entries[i][j]);
         }
     }
     return mat;
